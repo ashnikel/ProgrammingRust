@@ -12,7 +12,7 @@ impl Fern {
 
 /// Run a fern simulation for some number of days.
 fn run_simulation(fern: &mut Fern, days: usize) {
-    for _ in 0 .. days {
+    for _ in 0..days {
         fern.grow();
     }
 }
@@ -20,7 +20,7 @@ fn run_simulation(fern: &mut Fern, days: usize) {
 fn main() {
     let mut fern = Fern {
         size: 1.0,
-        growth_rate: 0.001
+        growth_rate: 0.001,
     };
     run_simulation(&mut fern, 1000);
     println!("final fern size: {}", fern.size);
