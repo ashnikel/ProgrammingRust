@@ -1,18 +1,12 @@
-pub struct Fern {
-    pub size: f64,
-    pub growth_rate: f64,
-}
+//! Simulate the growth of ferns, from the level of individual cells on up.
 
-impl Fern {
-    /// Simulate a fern growing for one day.
-    pub fn grow(&mut self) {
-        self.size *= 1.0 + self.growth_rate;
-    }
-}
+pub mod cells;
+pub mod plant_structures;
+pub mod simulation;
+pub mod spores;
 
-/// Run a fern simulation for some number of days.
-pub fn run_simulation(fern: &mut Fern, days: usize) {
-    for _ in 0..days {
-        fern.grow();
-    }
-}
+pub use plant_structures::Fern;
+pub use simulation::Terrarium;
+
+pub mod net;
+pub use net::connect;
