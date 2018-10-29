@@ -22,9 +22,7 @@ impl Terrarium {
         // This implementation is, like everything else in here, completely bogus
         File::open(filename).unwrap(); // check that the file is there
         Terrarium {
-            ferns: vec![
-                Fern::new(FernType::Fiddlehead)
-            ]
+            ferns: vec![Fern::new(FernType::Fiddlehead)],
         }
     }
 

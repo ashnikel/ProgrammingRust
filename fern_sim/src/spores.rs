@@ -22,6 +22,4 @@ pub fn produce_spore(factory: &mut Sporangium) -> Spore {
 }
 
 /// Mix genes to prepare for meiosis (part of interphase).
-fn recombine(parent: &mut Cell) {
-    
-}
+fn recombine(parent: &mut Cell) {}

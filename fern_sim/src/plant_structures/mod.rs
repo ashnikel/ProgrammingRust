@@ -31,11 +31,13 @@ impl Fern {
     pub fn new(_type: FernType) -> Fern {
         Fern {
             roots: vec![],
-            stems: vec![stems::Stem {furled: true }],
+            stems: vec![stems::Stem { furled: true }],
         }
     }
 
-    pub fn is_furled(&self) -> bool { !self.is_fully_unfurled() }
+    pub fn is_furled(&self) -> bool {
+        !self.is_fully_unfurled()
+    }
 
     pub fn is_fully_unfurled(&self) -> bool {
         self.stems.iter().all(|s| !s.furled)
