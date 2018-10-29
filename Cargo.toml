@@ -3,4 +3,5 @@ members = [
     "gcd",
     "iron-gcd",
     "mandelbrot",
+    "fern_sim",
 ]
