@@ -25,6 +25,10 @@ name = "basic-router"
 version = "0.1.0"
 
 [[package]]
+name = "binary-tree"
+version = "0.1.0"
+
+[[package]]
 name = "bitflags"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
