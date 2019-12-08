@@ -152,6 +152,10 @@ name = "fern_sim"
 version = "0.1.0"
 
 [[package]]
+name = "fingertips"
+version = "0.1.0"
+
+[[package]]
 name = "fuchsia-cprng"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"

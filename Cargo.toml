@@ -6,4 +6,5 @@ members = [
     "fern_sim",
     "basic-router",
     "binary-tree",
+    "fingertips",
 ]
