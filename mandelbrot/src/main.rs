@@ -1,12 +1,13 @@
 extern crate crossbeam;
 extern crate image;
 extern crate num;
+extern crate rayon;
 
-use image::ColorType;
 use image::png::PNGEncoder;
+use image::ColorType;
 use num::Complex;
+use rayon::prelude::*;
 use std::fs::File;
-use std::io::Write;
 use std::str::FromStr;
 
 /// Parse the string `s` as a coordinate pair, like `"400x600"` or `"1.0,0.5"`.
@@ -170,17 +171,11 @@ fn write_image(
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 5 {
-        writeln!(
-            std::io::stderr(),
-            "Usage: mandelbrot FILE PIXELS UPPERLEFT \
-             LOWERRIGHT"
-        ).unwrap();
-        writeln!(
-            std::io::stderr(),
-            "Example: {} mandel.png 1000x750 -1.30,0.35 \
-             -1,0.20",
+        eprintln!("Usage: mandelbrot FILE PIXELS UPPERLEFT LOWERRIGHT");
+        eprintln!(
+            "Example: {} mandel.png 1000x750 -1.30,0.35 -1,0.20",
             args[0]
-        ).unwrap();
+        );
         std::process::exit(1);
     }
 
@@ -190,24 +185,16 @@ fn main() {
 
     let mut pixels = vec![0; bounds.0 * bounds.1];
 
-    let threads = 8;
-    let rows_per_band = bounds.1 / threads + 1;
-
+    // Scope of slicing up `pixels` into horizontal bands.
     {
-        let bands: Vec<&mut [u8]> = pixels.chunks_mut(rows_per_band * bounds.0).collect();
-        crossbeam::scope(|spawner| {
-            for (i, band) in bands.into_iter().enumerate() {
-                let top = rows_per_band * i;
-                let height = band.len() / bounds.0;
-                let band_bounds = (bounds.0, height);
-                let band_upper_left = pixel_to_point(bounds, (0, top), upper_left, lower_right);
-                let band_lower_right =
-                    pixel_to_point(bounds, (bounds.0, top + height), upper_left, lower_right);
-
-                spawner.spawn(move || {
-                    render(band, band_bounds, band_upper_left, band_lower_right);
-                });
-            }
+        let bands: Vec<(usize, &mut [u8])> = pixels.chunks_mut(bounds.0).enumerate().collect();
+        bands.into_par_iter().weight_max().for_each(|(i, band)| {
+            let top = i;
+            let band_bounds = (bounds.0, 1);
+            let band_upper_left = pixel_to_point(bounds, (0, top), upper_left, lower_right);
+            let band_lower_right =
+                pixel_to_point(bounds, (bounds.0, top + 1), upper_left, lower_right);
+            render(band, band_bounds, band_upper_left, band_lower_right);
         });
     }
 

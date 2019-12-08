@@ -7,3 +7,4 @@ authors = ["ashNikel <ashnikel@gmail.com>"]
 crossbeam = "0.2.8"
 image = "0.13.0"
 num = "0.1.27"
+rayon = "0.4"
