@@ -4,5 +4,6 @@ members = [
     "iron-gcd",
     "mandelbrot",
     "fern_sim",
-    "basic-router"
+    "basic-router",
+    "binary-tree",
 ]
